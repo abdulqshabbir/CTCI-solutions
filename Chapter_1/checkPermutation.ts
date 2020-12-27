@@ -11,4 +11,5 @@ export function checkPermutation(a: string, b: string) {
     const unicodeArrayOfB = b.split('').map((char, i) => char.charCodeAt(i))
     console.log(unicodeArrayOfA)
     console.log(unicodeArrayOfB)
+
 }
