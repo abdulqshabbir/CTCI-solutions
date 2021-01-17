@@ -1,3 +1,4 @@
-import { checkPermutation } from './Chapter_1/checkPermutation'
+import { oneAway } from './Chapter_1/1.5_One_Away'
 
-checkPermutation('hello', 'world')
+
+console.log(oneAway('aaab', 'aabb'))

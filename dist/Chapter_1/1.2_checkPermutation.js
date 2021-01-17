@@ -3,14 +3,16 @@
     Problem: Given two strings, write a method
     that decides if one is a permutation of the other.
 
-    Naive solution: time complexity is O(aloga + blogb) where
-    a is the number of characters in string a, and b is the number
-    of characters in string b
+    Naive solution: time complexity is O(clogc) where
+    c is the number of characters in string a or b
+
+    HashMap solution: O(c) where c is the number of characters
+    in string a or b.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkPermutationHashMap = exports.checkPermutationNaive = void 0;
 function checkPermutationNaive(a, b) {
-    // assume the strings are in ASCII format
+    // assume the strings are in ASCII format, whitespace is significant and permutation is case-sensitive
     if (a.length !== b.length) {
         return false;
     }
@@ -29,26 +31,26 @@ function checkPermutationHashMap(a, b) {
     if (a.length !== b.length) {
         return false;
     }
-    const mapA = new Map();
-    const mapB = new Map();
-    // tslint:disable-next-line: prefer-for-of
+    const numOfCharacters = new Map();
     for (let char of a) {
         /*
-            if map doesn't have character, insert character with value 1 into mapA
-            if map does have character, increment value by 1
+           store the number of occurences of each character into the hashmap: numOfCharacters
         */
-        if (!mapA.has(char)) {
-            mapA.set(char, 1);
+        if (!numOfCharacters.has(char)) {
+            numOfCharacters.set(char, 1);
         }
         else {
-            const prev = mapA.get(char);
-            mapA.set(char, prev + 1);
+            const prev = numOfCharacters.get(char);
+            numOfCharacters.set(char, prev + 1);
         }
     }
     for (let char of b) {
-        if (mapA.has(char) && mapA.get(char) > 0) {
-            const prev = mapA.get(char);
-            mapA.set(char, prev - 1);
+        /*
+            Remove the occurences of each character by reversing the process in the first for-loop
+        */
+        if (numOfCharacters.has(char) && numOfCharacters.get(char) > 0) {
+            const prev = numOfCharacters.get(char);
+            numOfCharacters.set(char, prev - 1);
         }
         else {
             return false;
@@ -57,4 +59,4 @@ function checkPermutationHashMap(a, b) {
     return true;
 }
 exports.checkPermutationHashMap = checkPermutationHashMap;
-//# sourceMappingURL=checkPermutation.js.map
+//# sourceMappingURL=1.2_checkPermutation.js.map
