@@ -44,3 +44,5 @@ function createZeroColumn(matrix: number[][], zeroColumn: number, rows: number, 
     }
     return matrix
 }
+
+// to-do: optimize code to use less space
