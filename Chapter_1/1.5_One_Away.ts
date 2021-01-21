@@ -14,19 +14,22 @@
     in the larger string
 */
 export function oneAway(strA: string, strB: string) {
-    // assume string only contains upper/lower case english letters
-    return checkForOneAway(strA, strB)
-}
-
-function checkForOneAway(strA: string, strB: string): boolean {
-    if (strA.length === strB.length) {
-        return checkForOneEdit(strA, strB)
+    // check lengths
+    if (Math.abs(strA.length - strB.length) > 1) {
+        return false
+    }
+    // length difference of one
+    else if (Math.abs(strA.length - strB.length) === 1) {
+        const shorterString = strA.length < strB.length ? strA : strB
+        const longerString = strA.length < strB.length ? strB : strA
+        return checkForAddOrRemove(shorterString, longerString)
     } else {
-        return checkForAddOrRemove(strA, strB)
+        // lengths are equal
+        return checkForOneEdit(strA, strB)
     }
 }
 
-function checkForOneEdit(strA: string, strB: string) {
+function checkForOneEdit(strA: string, strB: string): boolean {
     const charTableA = buildFrequencyTable(strA)
     const charTableB = buildFrequencyTable(strB)
     let numberOfCharDifferences = 0 // there should be two instances of character differences if the string was edited
@@ -40,33 +43,25 @@ function checkForOneEdit(strA: string, strB: string) {
     return numberOfCharDifferences === 2
 }
 
-function checkForAddOrRemove(strA: string, strB: string) {
-    // make strA the longer string
-    if (strB.length > strA.length) {
-        const temp = strB
-        strB = strA
-        strA = temp
-    }
-
+function checkForAddOrRemove(strA: string, strB: string): boolean {
+    // pre-condition: strA is the shorter string by one character
     let numberOfChanges = 0
 
     const charTableA = buildFrequencyTable(strA)
     const charTableB = buildFrequencyTable(strB)
 
     for (let i = 0; i < charTableA.length; i++) {
-        if (charTableA[i] - charTableB[i] === 1) {
-            numberOfChanges++
+        if (Math.abs(charTableA[i] - charTableB[i]) > 0) {
+            numberOfChanges = numberOfChanges + Math.abs(charTableA[i] - charTableB[i])
             if (numberOfChanges > 1) {
                 return false
             }
-        } else if (charTableA[i] - charTableB[i] > 1) {
-            return false
         }
     }
-    return true
+    return numberOfChanges === 1
 }
 
-function buildFrequencyTable(str: string) {
+function buildFrequencyTable(str: string): number[] {
     // map each string to its character code
     // e.g. A -> 0, B -> 1, ...
 
@@ -79,7 +74,7 @@ function buildFrequencyTable(str: string) {
     return table
 }
 
-function getCharacterCode(char: string) {
+function getCharacterCode(char: string): number {
     // will map English letters to numbers starting from 0
     // e.g. A -> 0, B -> 2, ... , a -> 26, b -> 27, ...
     if (char.length !== 1) {
@@ -96,7 +91,7 @@ function getCharacterCode(char: string) {
     if (val >= A && val <= Z) {
         return val - A
     }
-    // map uppercase letters to a number from 0 to 25
+    // map uppercase letters to a number
     if (val >= a && val <= z) {
         return val - a
     }

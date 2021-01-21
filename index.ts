@@ -1,4 +1,3 @@
-import { oneAway } from './Chapter_1/1.5_One_Away'
+import { zeroMatrix } from './Chapter_1/1.8_Zero_Matrix'
 
-
-console.log(oneAway('aaab', 'aabb'))
+console.log(zeroMatrix([[1, 2, 0, 10], [4, 5, 5, 19], [7, 0, 9, 20]]))
