@@ -1,8 +1,13 @@
-import { optimizedZeroMatrix } from './Chapter_1/1.8_Zero_Matrix'
+import { LinkedList } from './Chapter_2/2.0_Linked_List'
+import { removeDuplicates } from './Chapter_2/2.1_Remove_Dups'
 
-console.log(optimizedZeroMatrix([
-    [2, 4, 0, 5, 3],
-    [10, 3, 5, 6, 9],
-    [11, 10, 7, 1, 10],
-    [12, 13, 14, 1, 11]
-]))
+const l = new LinkedList()
+l.append(3)
+l.append(3)
+l.append(2)
+l.append(4)
+l.append(4)
+l.append(5)
+l.print()
+removeDuplicates(l)
+l.print()
