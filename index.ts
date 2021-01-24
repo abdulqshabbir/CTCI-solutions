@@ -1,3 +1,8 @@
-import { zeroMatrix } from './Chapter_1/1.8_Zero_Matrix'
+import { optimizedZeroMatrix } from './Chapter_1/1.8_Zero_Matrix'
 
-console.log(zeroMatrix([[1, 2, 0, 10], [4, 5, 5, 19], [7, 0, 9, 20]]))
+console.log(optimizedZeroMatrix([
+    [2, 4, 0, 5, 3],
+    [10, 3, 5, 6, 9],
+    [11, 10, 7, 1, 10],
+    [12, 13, 14, 1, 11]
+]))
