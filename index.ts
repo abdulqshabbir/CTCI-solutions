@@ -1,13 +1,10 @@
 import { LinkedList } from './Chapter_2/2.0_Linked_List'
-import { removeDuplicates } from './Chapter_2/2.1_Remove_Dups'
-
+import { deleteMiddleNode } from './Chapter_2/2.3_Delete_Middle_Node'
 const l = new LinkedList()
-l.append(3)
-l.append(3)
-l.append(2)
-l.append(4)
-l.append(4)
-l.append(5)
+l.append(10)
+l.append(23)
+l.append(13)
+l.append(15)
 l.print()
-removeDuplicates(l)
+deleteMiddleNode(l.head.next.next.next)
 l.print()

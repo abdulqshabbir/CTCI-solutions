@@ -1,61 +1,34 @@
 "use strict";
 /*
     Problem:  Write code to remove duplicates from an unsorted linked list.
+    Do it in O(n) time and temporary buffer is allowed.
 */
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.removeDuplicates = void 0;
-// head -> 2 -> 5 -> 3 -> 2 -> null
-/*
-    Naive solution:
-
-    create a map which maps node data -> count
-    for each node in linked list:
-        if (!map[node.data])
-            map[node.data] = 1
-        else:
-            map[node.data]++
-    for each node in linked list:
-        if (map[node.data] > 1)
-            list.delete(node.data)
-    return head
-*/
 function removeDuplicates(list) {
-    debugger;
     const map = new Map();
-    let n = list.head;
-    // one or two nodes in a linked list cannot have duplicates 
-    if (n === null || n.next === null)
+    // one or two nodes in a linked list cannot have duplicates
+    if (list.head === null || list.head.next === null)
         return list;
-    // head -> 3 -> 3 -> null
-    while (n.next !== null) {
-        if (!map.get(n.data)) {
-            map.set(n.data, 1);
-            n = n.next;
+    // i, j are nodes and j will move ahead of i
+    let i = list.head;
+    let j = list.head;
+    // isInLinkedList will store if a data value already exists in linked list
+    const isInLinkedList = new Map();
+    j = j.next;
+    while (j.next !== null) {
+        isInLinkedList.set(i.data, true);
+        if (isInLinkedList.has(j.data)) {
+            i.next = j.next;
+            j = i.next;
         }
         else {
-            const data = n.data;
-            const count = map.get(n.data);
-            map.set(data, count + 1);
-            n = n.next;
+            i = i.next;
+            j = j.next;
         }
     }
-    if (!map.get(n.data)) {
-        map.set(n.data, 1);
-    }
-    else {
-        const data = n.data;
-        const count = map.get(n.data);
-        map.set(data, count + 1);
-    }
-    let m = list.head;
-    while (m.next !== null) {
-        if (map.get(m.data) > 1) {
-            list.delete(m.data);
-        }
-        m = m.next;
-    }
-    if (map.get(m.data) > 1) {
-        list.delete(m.data);
+    if (isInLinkedList.has(j.data)) {
+        i.next = null;
     }
     return list;
 }
