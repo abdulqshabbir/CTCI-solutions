@@ -14,42 +14,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.partition = void 0;
 const _2_0_Linked_List_1 = require("./2.0_Linked_List");
 const _2_0_Node_1 = require("./2.0_Node");
-/*
-    function partition (list, p) => list
-
-    create two lists: a & b
-    a will contain nodes such that node.data < p
-    b will contain nodes such that node.data >= p
-
-    for each node in list:
-        if node.data < p:
-            rest = a.head
-            a.head = node
-            node.next = rest
-        else:
-            rest = b.head
-            b.head = node
-            node.next = rest
-
-    create n which is initialized to a.head
-
-    while (n.next !== null) {
-        n = n.next
-    }
-
-    n.next = b
-    return a
-*/
 function partition(list, p) {
-    debugger;
     // a is a list with nodes | node.data < p
     const a = new _2_0_Linked_List_1.LinkedList();
     // b is a list with nodes | node.data >= p
     const b = new _2_0_Linked_List_1.LinkedList();
     let node = list.head;
-    // list: head -> 10 -> 23 -> 13 -> 15 -> null
-    // a: head -> null
-    // b: head -> null
     while (node !== null) {
         if (node.data < p) {
             const rest = a.head;
@@ -70,6 +40,7 @@ function partition(list, p) {
     if (a.head === null)
         return b;
     let n = a.head;
+    // iterate until the end of a and link the last node of a to b
     while (n.next !== null) {
         n = n.next;
     }
