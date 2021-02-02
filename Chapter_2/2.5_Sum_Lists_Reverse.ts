@@ -11,6 +11,8 @@
 import { LinkedList } from "./2.0_Linked_List";
 import { Node } from './2.0_Node';
 
+// =========== ITERATIVE SOLUTION ========================// 
+
 export function sumLists(listA: LinkedList, listB: LinkedList) {
     // let i, j be nodes on lists A and B respectively
     let i = listA.head
@@ -89,4 +91,83 @@ function constructSummedList(digitArray: number[]) {
         }
     }
     return summedList
+}
+
+// ===================== RECURSIVE SOLUTION ======================//
+interface PartialSum {
+    sum: Node | null,
+    tail: Node | null,
+    carry: number
+}
+
+class PartialSum {
+    constructor() {
+        this.sum = null
+        this.tail = null
+        this.carry = 0
+    }
+}
+
+// A -> 7 -> 1 -> 9 -> 9 -> null
+// B -> 5 -> 9 -> 2 -> null
+
+export function recursiveSumLists(A: Node, B: Node, partialSum = new PartialSum()): Node {
+    // A and B are the head nodes of list A and list B
+
+    // when we hit the end of both lists
+    if (A === null && B === null && partialSum.carry === 0) {
+        return partialSum.sum
+    }
+
+    // when we hit the end of both lists but there is a carry left over
+    if (A === null && B === null && partialSum.carry !== 0) {
+        partialSum.tail.next = new Node(partialSum.carry)
+        partialSum.tail = partialSum.tail.next
+        partialSum.carry = partialSum.carry - 1
+
+        return recursiveSumLists(A, B, partialSum)
+    }
+    // when we hit the end of list B
+    if (A !== null && B === null) {
+        let v = A.data + partialSum.carry
+        if (v > 9) {
+            v = v % 10
+            partialSum.carry = 1
+        } else {
+            partialSum.carry = 0
+        }
+        partialSum.tail.next = new Node(v)
+        partialSum.tail = partialSum.tail.next
+        return recursiveSumLists(A.next, B, partialSum)
+    }
+    // when we hit the end of list A
+    if (A === null && B !== null) {
+        let v = B.data + partialSum.carry
+        if (v > 9) {
+            v = v % 10
+            partialSum.carry = 1
+        } else {
+            partialSum.carry = 0
+        }
+        partialSum.tail.next = new Node(v)
+        partialSum.tail = partialSum.tail.next
+        return recursiveSumLists(A, B.next, partialSum)
+    }
+    // main recursive step
+    let val = A.data + B.data + partialSum.carry
+    let carry = 0
+    if (val > 9) {
+        val = val % 10
+        carry = 1
+    }
+
+    if (partialSum.sum === null) {
+        partialSum.sum = new Node(val)
+        partialSum.tail = partialSum.sum
+    } else {
+        partialSum.tail.next = new Node(val)
+        partialSum.tail = partialSum.tail.next
+    }
+    partialSum.carry = carry
+    return recursiveSumLists(A.next, B.next, partialSum)
 }

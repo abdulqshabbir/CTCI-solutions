@@ -3,6 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.prepend = exports.padWithZeros = exports.getSize = exports.addListHelper = exports.sumLists = void 0;
 const _2_0_Linked_List_1 = require("./2.0_Linked_List");
 const _2_0_Node_1 = require("./2.0_Node");
+/*
+    Problem:
+    Sum Lists: You have two numbers represented by a linked list, where each node
+    contains a single digit.The digits are stored in forwward order. Write a
+    function that adds the two numbers and returns the sum as a linked list.
+*/
 function sumLists(A, B) {
     // create placeholder zeros if neeeded
     if (getSize(A) > getSize(B)) {
@@ -28,7 +34,6 @@ class PartialSum {
     }
 }
 function addListHelper(A, B) {
-    debugger;
     // base case when we reach the end of both lists
     if (A === null || B === null) {
         return new PartialSum();

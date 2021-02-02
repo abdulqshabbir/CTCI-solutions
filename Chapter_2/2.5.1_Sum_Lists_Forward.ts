@@ -1,6 +1,13 @@
 import { LinkedList } from "./2.0_Linked_List";
 import { Node } from "./2.0_Node";
 
+/*
+    Problem:
+    Sum Lists: You have two numbers represented by a linked list, where each node
+    contains a single digit.The digits are stored in forwward order. Write a
+    function that adds the two numbers and returns the sum as a linked list.
+*/
+
 export function sumLists(A: LinkedList, B: LinkedList) {
     // create placeholder zeros if neeeded
     if (getSize(A) > getSize(B)) {
@@ -33,7 +40,6 @@ class PartialSum {
 }
 
 export function addListHelper(A: Node, B: Node): PartialSum {
-    debugger;
     // base case when we reach the end of both lists
     if (A === null || B === null) {
         return new PartialSum()
