@@ -5,13 +5,47 @@
 import { LinkedList } from "./2.0_Linked_List";
 import { Node } from "./2.0_Node";
 
-/*
-    Psuedocode:
+export function isPalindromeRecursive(head: Node, size: number) {
+    /*
+        head -> 1 -> 3 -> 5 -> 3 -> 1 -> null
+        // base case
 
-    1. reverse the linked list
-    2. iterate over the reversed list and original
-       list and check if they are equivalent
- */
+
+        // recurisive step
+        if (index <= midIndex) push head.data onto stack
+        if (index > midIndex && head.data === stack[stack.length -1]) pop off stack
+        head = head.next
+        isPalindromeRecursive(head, stack)
+    */
+}
+
+export function isPalindromeUsingStack(list: LinkedList) {
+    // 1 -> 3 -> 3 -> 1
+    const stack = []
+    const size = getSize(list)
+    let midIndex = Math.floor(size / 2)
+    if (size % 2 === 0) {
+        midIndex = midIndex - 1
+    }
+
+    let n = list.head
+    for (let i = 0; i <= midIndex; i++) {
+        stack.push(n.data)
+        n = n.next
+    }
+
+    if (size % 2 === 1) {
+        stack.pop()
+    }
+
+    while (n !== null) {
+        if (n.data !== stack.pop()) {
+            return false
+        }
+        n = n.next
+    }
+    return stack.length === 0 ? true : false
+}
 
 export function isPalindrome(original: LinkedList) {
     const reverse = reverseList(original)
